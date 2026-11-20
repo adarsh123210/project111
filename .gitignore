@@ -1,0 +1,11 @@
+# Bytecode / compiled
+__pycache__/
+*.py[cod]
+*.pyc
+
+# SQLite database (local, regenerated on first run)
+courier_management.db
+
+# OS
+.DS_Store
+Thumbs.db
