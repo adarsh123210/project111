@@ -1,0 +1,168 @@
+# RecallBox Design System
+
+This document records the visual language implemented in RecallBox's desktop
+application so it can be carried into another project. It describes the
+CustomTkinter interface in `revision/revision_ui.py` and
+`revision/my_subjects_ui.py`; it is not a specification of a web UI. Values
+below distinguish shared design tokens from context-specific status colors.
+
+## Design direction
+
+- **Personality:** calm, focused, approachable, and study-oriented.
+- **Visual hierarchy:** a quiet, near-white lavender canvas; white content
+  surfaces; saturated purple for primary actions and key values; dark ink for
+  headings; muted gray-purple for supporting text.
+- **Shape:** soft rounded cards and controls, with generous separation rather
+  than heavy borders or shadows.
+- **Interaction:** navigation and actions use a pale-purple hover/selected
+  state. Keep labels direct and supportive.
+
+## Color palette
+
+| Token | Value | Use |
+| --- | --- | --- |
+| `background` | `#F7F7FC` | Application canvas and scrollable content areas |
+| `surface` | `#FFFFFF` | Sidebar, cards, and standard content surfaces |
+| `primary` | `#6957D8` | Primary buttons, brand mark, emphasized values, links |
+| `primary-soft` | `#EEEAFE` | Selected navigation, secondary action surfaces, callouts |
+| `text` | `#25243A` | Headings and primary body copy |
+| `muted` | `#85849A` | Subtitles, captions, metadata, inactive navigation |
+
+### Interaction and semantic colors
+
+| Context | Value(s) | Use |
+| --- | --- | --- |
+| Primary button hover | `#5544B8`, `#5745C5`, or `#5544C7` | Hover on primary actions; source screens use slightly different shades |
+| Soft action hover | `#DCD4FF` | Hover on pale-purple secondary buttons |
+| Neutral action | `#E5E5E5` (hover `#D5D5D5`) | Secondary/cancel action |
+| Strong-on-primary text | `#E8E3FF` | Supporting copy on a primary-purple welcome panel |
+| Weak / incorrect | `#E74C3C`, `#E5484D`, or `#E04444` | Low-performance state or incorrect answer feedback |
+| Average / attention | `#F39C12` | Mid-range performance and medium priority |
+| Strong / correct | `#27AE60`, `#2EAD63`, or `#2E9D50` | High performance or correct answer feedback |
+
+Status colors vary slightly by screen. For a new implementation, choose one
+consistent red, amber, and green from the listed values and use the same
+mapping for labels, icons, and progress indicators. Do not rely on color alone
+to communicate correctness or priority.
+
+## Typography
+
+- **Typeface:** Arial throughout the interface.
+- **Page title:** 28–30 px, bold.
+- **Section title / dialog title:** 20–25 px, bold.
+- **Card title / key value:** 15–21 px, often bold.
+- **Body and controls:** 13–15 px.
+- **Supporting details:** 10–13 px.
+- **Dashboard statistic:** 27 px, bold.
+
+Use the dark text token for titles and core content. Use muted text for
+descriptions, labels, and metadata. Use primary purple sparingly for emphasis
+and important values rather than long passages.
+
+## Layout and spacing
+
+- The application is a desktop-first, fixed-sidebar layout. The main window
+  starts at **1200 × 750 px** and has a **1000 × 650 px** minimum.
+- The left navigation rail is **230 px** wide, white, and full-height.
+- Main content expands to fill remaining width, with approximately **30 px**
+  horizontal and **25 px** vertical outer padding.
+- Common content gutters are **15–25 px**; cards are separated by about
+  **7–10 px** vertically.
+- Use compact internal card padding (commonly **15–20 px**) and larger
+  page-level gaps between a title, subtitle, and actions.
+- Long lists and question collections use a scrollable content region.
+- The current layout uses Tkinter `pack` geometry and does not define a
+  responsive breakpoint system. For web or mobile reuse, retain the hierarchy
+  but adapt the sidebar and card columns for narrower viewports.
+
+## Components
+
+### Sidebar and navigation
+
+- White rail, zero corner radius, fixed width of 230 px.
+- Brand mark at the top: purple, bold Arial, approximately 25 px.
+- Navigation items are full-width, left-aligned, 45 px high, with a 10 px
+  corner radius and about 18 px horizontal inset.
+- Active item: pale-purple background, primary-purple bold text.
+- Inactive item: white background, muted regular text.
+- Hover: pale-purple background.
+
+### Page heading
+
+- Large bold dark title aligned to the leading edge.
+- Short muted subtitle beneath it, typically 13–14 px.
+- Leave a larger gap after the subtitle before the main content or actions.
+
+### Cards
+
+- White surface on the light canvas, without a prominent border or shadow.
+- Rounded corners: usually **12–16 px**; larger hero panels use about **18 px**.
+- Subject cards are around **110 px** tall; topic cards around **80 px**.
+- Dashboard/stat cards align horizontally, use equal flexible widths, and
+  group a muted label, large purple value, and muted caption.
+- Use a pale-purple card for explanatory or selected content that should be
+  differentiated from ordinary white surfaces.
+
+### Buttons
+
+- **Primary:** primary-purple fill with white label; typical height **40–45 px**.
+  Use the darker purple hover color.
+- **Secondary:** pale-purple fill, primary-purple label, and a slightly deeper
+  pale-purple hover color.
+- **Text/back action:** transparent fill, primary-purple text, pale-purple
+  hover surface. A leading arrow indicates back navigation.
+- **Hero action:** white fill and primary-purple label when placed on the
+  purple welcome card.
+- Keep actions verb-led and concise. Avoid placing multiple visually dominant
+  buttons together.
+
+### Forms and dialogs
+
+- Modal dialogs use a compact fixed-size window (common example: **400 × 230
+  px**), a bold centered title, and one or more generously sized inputs.
+- Common text entry height is **40 px**; question/explanation text areas are
+  around **80 px**.
+- Pair fields with clearly associated labels and use placeholders only as
+  supplementary hints.
+- Show validation and operation failures using explicit warning/error
+  messages.
+
+### Question and revision content
+
+- Display each question in a white rounded card with a bold question number
+  and prompt, indented options, a purple emphasized answer, and muted
+  explanation.
+- Separate cards with consistent vertical spacing; allow long text to wrap.
+- Revision summaries use white statistic cards and a progress card.
+- Progress fill follows performance status: red for weak, amber for average,
+  green for strong. Include a text value alongside the bar.
+- Correct/incorrect feedback uses green/red text and should also include
+  explicit labels or symbols.
+
+### Empty and placeholder states
+
+- Center a short, muted message in the available content area.
+- When possible, include a clear next action in the message (for example,
+  prompting the user to add their first subject or topic).
+
+## Reuse guidance
+
+1. Define the six core palette values above as shared theme tokens instead of
+   duplicating literals across screens.
+2. Keep the light canvas, white surfaces, purple primary action, and dark/muted
+   text hierarchy consistent across all pages.
+3. Use a small, consistent set of spacing and corner-radius values; match the
+   existing visual rhythm rather than copying every incidental pixel value.
+4. Consolidate the slightly different status and hover shades if creating a
+   new implementation.
+5. Preserve accessible contrast and pair color-coded states with text or
+   icons.
+6. This project explicitly selects CustomTkinter's light appearance mode.
+   Dark mode, responsive breakpoints, shadows, and a web-specific type scale
+   are not currently defined.
+
+## Source of truth
+
+The palette and interface patterns are implemented primarily in
+`revision/revision_ui.py` and `revision/my_subjects_ui.py`. If the UI changes,
+update this document alongside the relevant design tokens and components.
